@@ -2,64 +2,195 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>TEST APP</title>
+    <title>BUGFIX</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-
-
 </head>
 
-<body onload="fetch()">
-    <div class="container">
-        <h1>Simple App
-            <small> by Shiva Shankari</small>
-        </h1>
-        <div class="jumbotron">
-            <h3>Add new Issue:</h3>
-            <form id="issueInputForm">
-                <div class="form-group">
-                    <label for="issueDescription">Description</label>
-                    <input type="text" class="form-control" id="issueDescInput" placeholder="Describe the issue..">
+<body class="container">
+    <div id="exit_1" class="modal fade" data-backdrop="static" data-keyboard="false">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">GAME OVER You have 0 points!!</h2>
                 </div>
-
-                <div class="form-group">
-                    <label for="issueSeverityInput">Severity</label>
-                    <select id="issueSeverityInput" class="form-control">
-                        <option value="Low">Low</option>
-                        <option value="Hard">Hard</option>
-                    </select>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="issueAssignedto">Description</label>
-                    <input type="text" class="form-control" id="issueAssignedToInput" placeholder="Person name..">
-                </div>
-
-                <button type="submit" class="btn btn-primary">ADD</button>
-            </form>
-        </div>
-
-        <div class="col-lg-12">
-            <div id="List">
-            </div>
-
-            <div class="footer">
-                <p>&copy ShivaShankari.com</p>
             </div>
         </div>
     </div>
-    <!--Chance CDN -->
-    <script src="https://chancejs.com/chance.min.js"></script>
-    <!--JQuery CDN -->
-    <script src=" https://code.jquery.com/jquery-3.3.1.min.js " integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin=" anonymous "></script>
-    <!--Bootstrap CDN -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy "
-        crossorigin="anonymous "></script>
+    <div id="exit_2" class="modal fade" data-backdrop="static" data-keyboard="false">
 
-    <script src="main.js "></script>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">You have attended all Qns..GAME OVER</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+
+        <input type="button" id="EButton" value="Easy" onclick="getEasy()" class="btn btn-primary">
+        <input type="button" id="MButton" value="Medium" onclick="getMedium()" class="btn btn-warning">
+        <input type="button" id="HButton" value="Hard" onclick="getHard()" class="btn btn-danger">
+        <input type="number" id="marks" value="50" class="field left" readonly>
+
+    </div>
+
+    <div>
+
+        <input type="number" id="ENo" value="3" class="field left" readonly>
+        <input type="number" id="MNo" value="3" class="field left" readonly>
+        <input type="number" id="HNo" value="3" class="field left" readonly>
+
+    </div>
+
+    <br>
+    <div>
+        <input type="text" id="Question" placeholer="choose the type you want" class="field left" readonly>
+
+    </div>
+    <div id="Ans">
+        <textarea class="form-contorl" id="textArea" placeholder="Type your ans here"></textarea>
+    </div>
+    <br>
+    <input type="button" value="submit" onclick="checkAns()" class="btn btn-success" />
+    <script type="text/javascript" src="data.js"></script>
+    <script>
+        function getEasy() {
+            //  var marks = $("#marks").val();
+            //  alert(marks);
+            document.getElementById("ENo").value = $("#ENo").val() - 1;
+
+            document.getElementById("marks").value = $("#marks").val() - 50;
+            type = "easy";
+
+            if (typeof getEasy.counter == 'undefined') {
+                getEasy.counter = 0;
+            }
+
+            // alert(easy[getEasy.counter][0]);
+            document.getElementById("Question").value = easy[getEasy.counter][0];
+            getEasy.counter++;
+            if (getEasy.counter == 3) {
+                document.getElementById("EButton").disabled = true;
+
+            }
+
+        }
+
+        function getMedium() {
+            document.getElementById("MNo").value = $("#MNo").val() - 1;
+            //    var marks = $("#marks").val();
+            //    alert(marks);
+            document.getElementById("marks").value = $("#marks").val() - 30;
+            type = "medium";
+
+            if (typeof getMedium.counter == 'undefined') {
+                getMedium.counter = 0;
+            }
+
+            //alert(medium[getMedium.counter][0]);
+            document.getElementById("Question").value = medium[getMedium.counter][0];
+            getMedium.counter++;
+            if (getMedium.counter == 3) {
+                document.getElementById("MButton").disabled = true;
+
+            }
+
+        }
+
+        function getHard() {
+            //  var marks = $("#marks").val();
+            //  alert(marks);
+            document.getElementById("HNo").value = $("#HNo").val() - 1;
+            document.getElementById("marks").value = $("#marks").val() - 10;
+            type = "hard";
+
+            if (typeof getHard.counter == 'undefined') {
+                getHard.counter = 0;
+            }
+
+            // alert(easy[getEasy.counter][0]);
+            document.getElementById("Question").value = hard[getHard.counter][0];
+            getHard.counter++;
+            if (getHard.counter == 3) {
+                document.getElementById("HButton").disabled = true;
+
+            }
+
+        }
+        function checkAns() {
+            //alert(type);
+            // alert(getEasy.counter);
+            // alert($("#marks").val());
+            document.getElementById("Question").value = "";
+            var ans = $("#textArea").val();
+            document.getElementById("textArea").value = "";;
+            // alert("ans is" + ans);
+            if (type == "easy") {
+                //    alert(easy[getEasy.counter - 1][1]);
+                if (ans == easy[getEasy.counter - 1][1]) {
+                    alert("correct ans");
+                    document.getElementById("marks").value = Number($("#marks").val()) + 10;
+                }
+                else
+                    alert("wrong ans");
+            }
+            if (type == "medium") {
+                alert(medium[getMedium.counter - 1][1]);
+                if (ans == medium[getMedium.counter - 1][1]) {
+                    alert("correct ans");
+                    document.getElementById("marks").value = Number($("#marks").val()) + 20;
+                }
+                else
+                    alert("wrong ans");
+            }
+            if (type == "hard") {
+                //    alert(hard[getEasy.counter - 1][1]);
+                if (ans == hard[getHard.counter - 1][1]) {
+                    alert("correct ans");
+                    document.getElementById("marks").value = Number($("#marks").val()) + 50;
+                }
+                else
+                    alert("wrong ans");
+            }
+            //   alert("marks is "+$("#marks".))
+            if ($("#marks").val() < 10) {
+                alert("came");
+                $("#exit_1").modal('show');
+            }
+            if (getEasy.counter == 4 && getMedium.counter == 4 && getHard.counter == 4)
+                $("#exit_2").modal('show');
+
+
+            if ($("#marks").val() < 50) document.getElementById("EButton").disabled = true;
+            else {
+                document.getElementById("EButton").disabled = false;
+                document.getElementById("MButton").disabled = false;
+                document.getElementById("HButton").disabled = false;
+            }
+
+
+            if ($("#marks").val() < 30) {
+                document.getElementById("EButton").disabled = true;
+                document.getElementById("MButton").disabled = true;
+            }
+            else {
+                document.getElementById("EButton").disabled = false;
+                document.getElementById("MButton").disabled = false;
+            }
+
+
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
